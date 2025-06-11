@@ -3,16 +3,18 @@ export default class Item{
     private title: string;
     private length: number;
     private genre: string;
+
     private startDate: Date;
+    private endDate: Date;
 
     private isCompleted: boolean;
     private timeToComplete: number;
-    private endDate: Date;
+    
 
     constructor(config){
-        this.title = config.title;
-        this.length = config.length;
-        this.genre = config.genre;
+        this.title = config.title || "";
+        this.length = config.length || 0;
+        this.genre = config.genre || "";
     }
 
     public setStartDate(startDate: Date){
@@ -23,11 +25,17 @@ export default class Item{
         this.endDate = endDate;
     }
 
+    //get item details 
     public getDetails(){
         return {
             "title": this.title,
             "length": this.length,
             "genre": this.genre
         }
+    }
+
+    //get title for item update and removal
+    public getTitle(){
+        return this.title;
     }
 }
