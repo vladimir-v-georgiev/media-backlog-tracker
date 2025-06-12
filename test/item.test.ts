@@ -10,4 +10,22 @@ describe('Item', () => {
         });
         expect(item.getTitle()).toBe("Elden Ring");
     })
+    it('gets details', () => {
+        const config = {
+            title: "Elden Ring",
+            length: 100,
+            genre: "Souls-Like"
+        };
+        const item = new Item(config);
+        expect(item.getDetails()).toStrictEqual(config);
+    })
+    it('sets default details', () => {
+        const config = {}
+        const item = new Item(config);
+        expect(item.getDetails()).toStrictEqual({
+            title: "",
+            length: 0,
+            genre: ""
+        })
+    })
 });
