@@ -1,7 +1,8 @@
 {
     "type": "module",
     "scripts": {
-        "start": "tsx main.ts"
+        "start": "tsx main.ts",
+        "server": "tsx server.ts"
     },
     "devDependencies": {
         "ts-node": "^10.9.2",

@@ -23,8 +23,16 @@ export default class Backlog{
     }
 
     //update item in backlog
-    public update(){
-
+    public update(title: string, data: Object){
+        const item = this.backlog.find((item) => item.getTitle() === title)
+        const index = this.backlog.indexOf(item);
+        if (index !== -1){
+            Object.entries(data).forEach(([key, value]) => {
+                if (value !== undefined && key in this.backlog[index]) {
+                    this.backlog[index][key] = value;
+                }
+            });
+        }
     }
 
     //get backlog items 
