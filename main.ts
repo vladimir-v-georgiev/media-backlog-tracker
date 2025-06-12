@@ -1,5 +1,5 @@
-import Item from "./item.ts";
-import Backlog from "./backlog.ts";
+import Item from "./backend/item.ts";
+import Backlog from "./backend/backlog.ts";
 
 const config = [
     {
