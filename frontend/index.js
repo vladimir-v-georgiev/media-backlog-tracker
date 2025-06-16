@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('form');
     const responseBox = document.getElementById('responseBox');
-    console.log(form);
-    console.log(responseBox);
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -18,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const result = await response.json();
-            console.log(result)
 
             // Display the data inside the page
             responseBox.innerHTML = `

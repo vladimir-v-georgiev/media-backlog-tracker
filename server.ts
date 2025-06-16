@@ -16,12 +16,10 @@ interface FormData {
   genre: string
 }
 
-
 fastify.register(fastifyStatic, {
   root: path.join(__dirname, 'frontend'), // where your HTML/JS lives
   prefix: '/', // serve at root (http://localhost:3000/index.html)
 });
-
 
 const postSchema = {
   body: {
