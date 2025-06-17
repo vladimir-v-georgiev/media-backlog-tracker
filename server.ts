@@ -87,6 +87,11 @@ fastify.post<{ Body: FormData }>('/add', { schema: postSchema }, async (request,
   return { message: 'Object successfully added!'};
 })
 
+fastify.post<{ Body: FormData }>('/update', { schema: postSchema }, async (request, reply) => {
+  backlog.update(request.body['title'],request.body);
+  return { message: 'Object successfully updated!'};
+})
+
 const start = async () => {
   try {
     await fastify.listen({ port: 3000, host: '127.0.0.1' });
