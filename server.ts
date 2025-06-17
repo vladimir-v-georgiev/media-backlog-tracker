@@ -19,6 +19,10 @@ interface FormData {
   genre: string
 }
 
+interface RemoveData {
+  title: string
+}
+
 //init object
 const config = [
   {
@@ -72,6 +76,16 @@ const postSchema = {
   }
 };
 
+const removeSchema = {
+  body: {
+    type: 'object',
+    required: ['title'],
+    properties: {
+      title: {type: 'string'}
+    }
+  }
+}
+
 fastify.post<{ Body: FormData}>('/submit', { schema: postSchema }, async (request, reply) => {
   return { message: 'Data valid!', data: request.body };
 });
@@ -90,6 +104,11 @@ fastify.post<{ Body: FormData }>('/add', { schema: postSchema }, async (request,
 fastify.post<{ Body: FormData }>('/update', { schema: postSchema }, async (request, reply) => {
   backlog.update(request.body['title'],request.body);
   return { message: 'Object successfully updated!'};
+})
+
+fastify.post<{ Body: RemoveData }>('/remove', { schema: removeSchema }, async (request, reply) => {
+  backlog.remove(request.body['title']);
+  return { message: 'Object successfully deleted!'};
 })
 
 const start = async () => {
