@@ -92,7 +92,7 @@ fastify.post<{ Body: FormData}>('/submit', { schema: postSchema }, async (reques
 
 fastify.post('/view', async (request, reply) => {
   const response = backlog.getBacklog().replace(/\n/g, "<br>");
-  return { message: 'Data valid!', data: response };
+  return { message: 'Backlog displayed!', data: response };
 })
 
 fastify.post<{ Body: FormData }>('/add', { schema: postSchema }, async (request, reply) => {
