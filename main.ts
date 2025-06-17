@@ -29,7 +29,7 @@ const config = [
     }
 ]
 
-const backlogItems = [];
+const backlogItems: Item[] = [];
 
 config.forEach(element => {
     const item = new Item(element);

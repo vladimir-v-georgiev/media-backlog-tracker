@@ -2,6 +2,9 @@ import Fastify from 'fastify';
 import path from 'path';
 import fastifyStatic from '@fastify/static';
 
+import Backlog from './backend/backlog';
+import Item from './backend/item';
+
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -33,9 +36,51 @@ const postSchema = {
   }
 };
 
-fastify.post<{ Body: FormData }>('/submit', { schema: postSchema }, async (request, reply) => {
+fastify.post('/submit', { schema: postSchema }, async (request, reply) => {
   return { message: 'Data valid!', data: request.body };
 });
+
+fastify.post<{ Body: FormData}>('/view', async (request, reply) => {
+  const config = [
+      {
+          title: "Elden Ring",
+          length: 100,
+          genre: "Souls-Like"
+      },
+      {
+          title: "The Witcher 3",
+          length: 200,
+          genre: "Action-RPG"
+      },
+      {
+          title: "Undertale",
+          length: 10,
+          genre: "Indie"
+      },
+      {
+          title: "Final Fantasy 7: Rebirth",
+          length: 68,
+          genre: "JRPG"
+      },
+      {
+          title: "Uncharted: Drake's Fortune",
+          length: 20,
+          genre: "Adventure"
+      }
+  ]
+  
+  const backlogItems: Item[] = [];
+  
+  config.forEach(element => {
+      const item = new Item(element);
+      backlogItems.push(item);
+  });
+  
+  const backlog = new Backlog(backlogItems);
+  const response = backlog.getBacklog().replace(/\n/g, "<br>");
+  
+  return { message: 'Data valid!', data: response };
+})
 
 const start = async () => {
   try {

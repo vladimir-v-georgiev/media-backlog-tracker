@@ -16,27 +16,35 @@ export default class Backlog{
     //remove item from backlog
     public remove(title: string){
         const item = this.backlog.find((item) => item.getTitle() === title)
-        const index = this.backlog.indexOf(item);
-        if (index !== -1){
-            this.backlog.splice(index,1);
+        if (item !== undefined) {
+            const index = this.backlog.indexOf(item);
+            if (index !== -1){
+                this.backlog.splice(index,1);
+            }
         }
     }
 
     //update item in backlog
     public update(title: string, data: Object){
         const item = this.backlog.find((item) => item.getTitle() === title)
-        const index = this.backlog.indexOf(item);
-        if (index !== -1){
-            Object.entries(data).forEach(([key, value]) => {
-                if (value !== undefined && key in this.backlog[index]) {
-                    this.backlog[index][key] = value;
-                }
-            });
+        if (item !== undefined) {
+            const index = this.backlog.indexOf(item);
+            if (index !== -1){
+                Object.entries(data).forEach(([key, value]) => {
+                    if (value !== undefined && key in this.backlog[index]) {
+                        this.backlog[index][key] = value;
+                    }
+                });
+            }
         }
     }
 
     //get backlog items 
     public getBacklog(){
-        return this.backlog;
+        let backlogItems: string = ``;
+        for (let item of this.backlog) {
+            backlogItems += item.toString();
+        }
+        return backlogItems;
     }
 }
