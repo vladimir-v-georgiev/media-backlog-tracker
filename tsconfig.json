@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "target": "ES2020",
+      "moduleResolution": "Node",
+      "esModuleInterop": true,
+      "allowImportingTsExtensions": true,
+      "noEmit": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "outDir": "dist"
+    },
+    "ts-node": {
+      "esm": true
+    }
+  }
