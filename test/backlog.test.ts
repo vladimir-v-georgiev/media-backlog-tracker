@@ -5,7 +5,7 @@ import Item from '../backend/item'
 describe('Backlog', () => {
     it('gets backlog contents', () => {
         const backlog = new Backlog();
-        expect(backlog.getBacklog()).toStrictEqual([]);
+        expect(backlog.getBacklogString()).toStrictEqual([]);
     })
     it('adds items to backlog', () => {
         const backlog = new Backlog();
@@ -15,7 +15,7 @@ describe('Backlog', () => {
             genre: "Souls-Like"
         })
         backlog.add(item);
-        expect(backlog.getBacklog()).toStrictEqual([item]);
+        expect(backlog.getBacklogString()).toStrictEqual([item]);
     })
     it('removes items from backlog', () => {
         const backlog = new Backlog([new Item({
@@ -24,7 +24,7 @@ describe('Backlog', () => {
             genre: "Souls-Like"
         })]);
         backlog.remove("Elden Ring");
-        expect(backlog.getBacklog()).toStrictEqual([]);
+        expect(backlog.getBacklogString()).toStrictEqual([]);
     })
     it('updates items in backlog', () => {
         const backlog = new Backlog([new Item({
@@ -37,7 +37,7 @@ describe('Backlog', () => {
             title: "Elden Ring",
             length: 150,
             genre: "Souls-Like"
-        }) 
-        expect(backlog.getBacklog()).toStrictEqual([item]);
+        })
+        expect(backlog.getBacklogString()).toStrictEqual([item]);
     })
 })

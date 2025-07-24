@@ -8,6 +8,8 @@ import Item from './backend/item';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
+import fs from 'fs/promises';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -23,42 +25,64 @@ interface RemoveData {
   title: string
 }
 
+const BACKLOG_DATA_FILE = './database/backlog-data.json';
+
+
+
+
 //init object
 const config = [
   {
-      title: "Elden Ring",
-      length: 100,
-      genre: "Souls-Like"
+    title: "Elden Ring",
+    length: 100,
+    genre: "Souls-Like"
   },
   {
-      title: "The Witcher 3",
-      length: 200,
-      genre: "Action-RPG"
+    title: "The Witcher 3",
+    length: 200,
+    genre: "Action-RPG"
   },
   {
-      title: "Undertale",
-      length: 10,
-      genre: "Indie"
+    title: "Undertale",
+    length: 10,
+    genre: "Indie"
   },
   {
-      title: "Final Fantasy 7: Rebirth",
-      length: 68,
-      genre: "JRPG"
+    title: "Final Fantasy 7: Rebirth",
+    length: 68,
+    genre: "JRPG"
   },
   {
-      title: "Uncharted: Drake's Fortune",
-      length: 20,
-      genre: "Adventure"
+    title: "Uncharted: Drake's Fortune",
+    length: 20,
+    genre: "Adventure"
   }
 ]
-const backlogItems: Item[] = [];
-config.forEach(element => {
-  const item = new Item(element);
-  backlogItems.push(item);
-});
-const backlog = new Backlog(backlogItems);
 
 
+
+const backlog: Backlog = new Backlog();
+
+//load and save data to JSON 
+async function loadData() {
+  let data: any[] = [];
+  try {
+    const content = await fs.readFile(BACKLOG_DATA_FILE, 'utf-8');
+    data = JSON.parse(content);
+  } catch {
+    data = [];
+  }
+  data.forEach(element => {
+    let item = new Item(element);
+    backlog.add(item);
+  })
+}
+
+async function saveData() {
+  await fs.writeFile(BACKLOG_DATA_FILE, JSON.stringify(backlog.getBacklogObject(), null, 2));
+}
+
+//Fastify config 
 fastify.register(fastifyStatic, {
   root: path.join(__dirname, 'frontend'), // where your HTML/JS lives
   prefix: '/', // serve at root (http://localhost:3000/index.html)
@@ -81,34 +105,41 @@ const removeSchema = {
     type: 'object',
     required: ['title'],
     properties: {
-      title: {type: 'string'}
+      title: { type: 'string' }
     }
   }
 }
 
-fastify.post<{ Body: FormData}>('/submit', { schema: postSchema }, async (request, reply) => {
+fastify.post<{ Body: FormData }>('/submit', { schema: postSchema }, async (request, reply) => {
   return { message: 'Data valid!', data: request.body };
 });
 
+//view
 fastify.post('/view', async (request, reply) => {
-  const response = backlog.getBacklog().replace(/\n/g, "<br>");
+  const response = backlog.getBacklogString().replace(/\n/g, "<br>");
   return { message: 'Backlog displayed!', data: response };
 })
 
+//add
 fastify.post<{ Body: FormData }>('/add', { schema: postSchema }, async (request, reply) => {
   const item = new Item(request.body);
   backlog.add(item);
-  return { message: 'Object successfully added!'};
+  await saveData();
+  return { message: 'Object successfully added!' };
 })
 
+//update
 fastify.post<{ Body: FormData }>('/update', { schema: postSchema }, async (request, reply) => {
-  backlog.update(request.body['title'],request.body);
-  return { message: 'Object successfully updated!'};
+  backlog.update(request.body['title'], request.body);
+  await saveData();
+  return { message: 'Object successfully updated!' };
 })
 
+//remove
 fastify.post<{ Body: RemoveData }>('/remove', { schema: removeSchema }, async (request, reply) => {
   backlog.remove(request.body['title']);
-  return { message: 'Object successfully deleted!'};
+  await saveData();
+  return { message: 'Object successfully deleted!' };
 })
 
 const start = async () => {
@@ -121,5 +152,5 @@ const start = async () => {
   }
 };
 
-start();
+loadData().then(start);
 

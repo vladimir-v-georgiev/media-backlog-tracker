@@ -38,7 +38,7 @@ config.forEach(element => {
 
 
 const backlog = new Backlog(backlogItems);
-console.log(backlog.getBacklog());
+console.log(backlog.getBacklogString());
 backlog.remove("Undertale");
-backlog.update("The Witcher 3", {length: 150});
-console.log(backlog.getBacklog());
+backlog.update("The Witcher 3", { length: 150 });
+console.log(backlog.getBacklogString());
