@@ -1,7 +1,4 @@
-import { useState } from 'react'
-
 function Home() {
-
     return (
         <>
             <p> Hi, this is my media backlog tracker.</p>

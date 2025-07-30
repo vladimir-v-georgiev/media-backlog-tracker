@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import './App.css'
 import Home from './pages/Home';
-
+import View from './pages/View';
+import Add from './pages/Add';
+import Update from './pages/Update';
+import Remove from './pages/Remove';
 
 function App() {
   const [page, setPage] = useState('home');
@@ -16,10 +19,10 @@ function App() {
         <button onClick={() => setPage('remove')}>Remove</button>
       </nav>
       {page === 'home' && <Home />}
-      {/* {page === 'add' && <Add />}
       {page === 'view' && <View />}
+      {page === 'add' && <Add />}
       {page === 'update' && <Update />}
-      {page === 'remove' && <Remove />} */}
+      {page === 'remove' && <Remove />}
     </>
   )
 }
