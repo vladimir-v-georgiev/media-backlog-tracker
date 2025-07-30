@@ -27,9 +27,6 @@ interface RemoveData {
 
 const BACKLOG_DATA_FILE = './database/backlog-data.json';
 
-
-
-
 //init object
 const config = [
   {
@@ -59,13 +56,22 @@ const config = [
   }
 ]
 
-
+async function ensureFileExists(path: string, defaultContent = '{}') {
+  try {
+    await fs.access(path); // Check if file exists
+  } catch {
+    // File doesn't exist — create it with default content
+    await fs.writeFile(path, defaultContent, 'utf8');
+    console.log(`Created ${path}`);
+  }
+}
 
 const backlog: Backlog = new Backlog();
 
 //load and save data to JSON 
 async function loadData() {
   let data: any[] = [];
+  await ensureFileExists(BACKLOG_DATA_FILE, JSON.stringify(config, null, 2));
   try {
     const content = await fs.readFile(BACKLOG_DATA_FILE, 'utf-8');
     data = JSON.parse(content);
