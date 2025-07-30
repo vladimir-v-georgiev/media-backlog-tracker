@@ -1,21 +1,23 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
+  const [page, setPage] = useState('home');
 
   return (
     <>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="add.html">Add</a></li>
-        <li><a href="view.html">View</a></li>
-        <li><a href="update.html">Update</a></li>
-        <li><a href="remove.html">Remove</a></li>
-      </ul>
-      <p> Hi, this is my media backlog tracker.</p>
-      <div id="responseBox"></div>
+      <nav>
+        <button onClick={() => setPage('home')}>Home</button>
+        <button onClick={() => setPage('add')}>Add</button>
+        <button onClick={() => setPage('view')}>View</button>
+        <button onClick={() => setPage('update')}>Update</button>
+        <button onClick={() => setPage('remove')}>Remove</button>
+      </nav>
+      {page === 'home' && <Home />}
+      {page === 'add' && <Add />}
+      {page === 'view' && <View />}
+      {page === 'update' && <Update />}
+      {page === 'remove' && <Remove />}
     </>
   )
 }

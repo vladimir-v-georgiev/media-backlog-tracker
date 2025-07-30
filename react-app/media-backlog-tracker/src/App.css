@@ -4,27 +4,25 @@ body {
   font-size: 1.5em;
 }
 
-ul {
+nav {
   list-style: none;
   display: flex;
   justify-content: center;
   background-color: #333;
-  padding: 0;
-  margin: 0;
 }
 
-li {
-  margin: 0;
-}
-
-li a {
-  display: block;
-  padding: 14px 20px;
+nav button {
   color: white;
+  background: #333;
   text-decoration: none;
+  display: flex;
+  flex: 1;
+  padding: 14px 20px;
+  margin: 0;
+  justify-content: center;
 }
 
-li a:hover {
+nav button:hover {
   background-color: #575757;
 }
 
