@@ -58,7 +58,11 @@ const config = [
 
 async function ensureFileExists(path: string, defaultContent = '{}') {
   try {
-    await fs.access(path); // Check if file exists
+    // Ensure the directory exists
+    await fs.mkdir(dirname(path), { recursive: true });
+
+    // Check if the file exists
+    await fs.access(path);
   } catch {
     // File doesn't exist — create it with default content
     await fs.writeFile(path, defaultContent, 'utf8');
